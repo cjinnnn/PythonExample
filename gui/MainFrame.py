@@ -37,9 +37,9 @@ class PAGE_VIEW(IntEnum):
 
 class Ui_MainFrame(QtWidgets.QMainWindow):
     def __init__(self):
-        super(Ui_MainFrame, self).__init__() ## Call the inherited classes __init__ method
+        super(Ui_MainFrame, self).__init__()
         self.mainData = MainData.instance()
-        uic.loadUi(os.path.join(self.mainData.dir.GUI_DIR, "MainFrame.ui"), self) #load .ui file
+        uic.loadUi(os.path.join(self.mainData.dir.GUI_DIR, "MainFrame.ui"), self)
         self.mainData.app.aboutToQuit.connect(self.closeEvent)
         self.setWindowIcon(QtGui.QIcon(os.path.join(self.mainData.dir.RES_DIR, "robot.png")))
         self.setWindowTitle("Python Example App")
