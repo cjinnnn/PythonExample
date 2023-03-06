@@ -107,7 +107,7 @@ class Ui_MainFrame(QtWidgets.QMainWindow):
             self.dragPos = event.globalPos()
 
     def lblAppName_mouseDoubleClickEvent(self, event):
-        self.setWindow()
+        self.Screen_Maximized()
 
     def Side_Menu_Slider(self):
         min_w = 70
