@@ -49,9 +49,7 @@ class Ui_MainFrame(QtWidgets.QMainWindow):
         self.setWindowTitle("Python Example App")
         self.center()
         
-        self.showMaximaizeMode = False
         self.CurrentView = [PAGE_VIEW.HOME,self.toolButton_1]
-        self.Side_Menu_Num = 0
         self.InitTopBar()
         self.setPageButton()
         self.InitPage()
@@ -75,14 +73,13 @@ class Ui_MainFrame(QtWidgets.QMainWindow):
             event.ignore()
 
     def Screen_Maximized(self):
-        if self.showMaximaizeMode == False:
-            self.showMaximized()
-            self.showPage(self.CurrentView[0], self.CurrentView[1])
-            self.showMaximaizeMode = True
-        else:
+        if self.isMaximized():
             self.showNormal()
             self.showPage(self.CurrentView[0], self.CurrentView[1])
-            self.showMaximaizeMode = False
+        else:
+            self.showMaximized()
+            self.showPage(self.CurrentView[0], self.CurrentView[1])
+            
 
     def InitTopBar(self):
         self.btnMenu:QPushButton = self.btnMenu
@@ -113,7 +110,7 @@ class Ui_MainFrame(QtWidgets.QMainWindow):
         min_w = 70
         max_w = 170
         duration = 200
-        if self.Side_Menu_Num == 0:
+        if self.MenuBar.width() == min_w:
             self.animation1 = QtCore.QPropertyAnimation(self.MenuBar, b"maximumWidth")
             self.animation1.setDuration(duration)
             self.animation1.setStartValue(min_w)
@@ -127,7 +124,6 @@ class Ui_MainFrame(QtWidgets.QMainWindow):
             self.animation2.setEndValue(max_w)
             self.animation2.setEasingCurve(QtCore.QEasingCurve.InOutQuart)
             self.animation2.start()
-            self.Side_Menu_Num = 1
         else:
             self.animation1 = QtCore.QPropertyAnimation(self.MenuBar, b"maximumWidth")
             self.animation1.setDuration(duration)
@@ -142,7 +138,6 @@ class Ui_MainFrame(QtWidgets.QMainWindow):
             self.animation2.setEndValue(min_w)
             self.animation2.setEasingCurve(QtCore.QEasingCurve.InOutQuart)
             self.animation2.start()
-            self.Side_Menu_Num = 0
 
     def setPageButton(self):
         self.toolButton_1:QToolButton = self.toolButton_1
@@ -232,6 +227,7 @@ class Ui_MainFrame(QtWidgets.QMainWindow):
                 border: none;
             }
             """)
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     mainData = MainData.instance(app)
