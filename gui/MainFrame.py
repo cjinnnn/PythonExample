@@ -45,7 +45,7 @@ class Ui_MainFrame(QtWidgets.QMainWindow):
         self.mainData = MainData.instance()
         uic.loadUi(os.path.join(self.mainData.dir.GUI_DIR, "MainFrame.ui"), self)
         self.mainData.app.aboutToQuit.connect(self.closeEvent)
-        self.setWindowIcon(QtGui.QIcon(os.path.join(self.mainData.dir.RES_DIR, "robot.png")))
+        self.setWindowIcon(QtGui.QIcon(os.path.join(self.mainData.dir.RES_DIR, "assignment_add.svg")))
         self.setWindowTitle("Python Example App")
         self.center()
         
