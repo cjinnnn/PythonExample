@@ -33,7 +33,9 @@ from MainData import MainData
 
 from enum import IntEnum
 class PAGE_VIEW(IntEnum):
-    MAIN = 0,
+    HOME = 0,
+    SECOND = 1,
+    THIRD = 2,
 
 class Ui_MainFrame(QtWidgets.QMainWindow):
     def __init__(self):
