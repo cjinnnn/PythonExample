@@ -52,13 +52,14 @@ class Client(threading.Thread):
             self.ProcessData(data)
 
     def ProcessData(self, data):
+        data = data.decode("utf-8")
         for client in self.server.connections:
             client.send(data)
 
     def send(self, data):
         if self.signal == True and self.client != None:
             try:
-                data = bytes(data, 'utf-8')
+                data = str.encode(data) #bytes(data, 'utf-8')
                 self.client.sendall(data)
             except Exception as e:
                 print("Client send exception !" + str(self.address) + " has disconnected")
@@ -131,6 +132,10 @@ class test_client():
             try:
                 data = client.recv(MAX_BUFFER)
                 print("[test_client RCV]",str(data.decode("utf-8")))
+                if not data:
+                    self.client.close()
+                    self.signal = False
+                    break
             except:
                 print("You have been disconnected from the server")
                 signal = False
