@@ -10,9 +10,10 @@ MAX_BUFFER = 4096
 lock = threading.Lock()
 
 #서버에서 사용되는 클라이언트 소켓
-class Client(threading.Thread):
+class handle_Client(threading.Thread):
     def __init__(self, server, client, address, id, name, signal):
         threading.Thread.__init__(self)
+        self.daemon = True
         self.server:server_module = server
         self.client:socket.socket = client
         self.address = address
@@ -93,7 +94,7 @@ class server_module():
         self.server.bind((self.Ip, self.Port))
         self.server.listen(999)
 
-        newConnectionsThread = threading.Thread(target = self.newConnections, args = (self.server,))
+        newConnectionsThread = threading.Thread(target = self.newConnections, args = (self.server,), daemon=True)
         newConnectionsThread.start()
 
     def newConnections(self, socket:socket.socket):
@@ -102,7 +103,7 @@ class server_module():
             name = f"{address}_{self.id}"
 
             lock.acquire()
-            self.connections.append(Client(self, sock, address, self.id, name, True))
+            self.connections.append(handle_Client(self, sock, address, self.id, name, True))
             sock_index = len(self.connections) - 1
             self.connections[sock_index].start()
             self.id += 1
@@ -121,7 +122,7 @@ class test_client():
         except:
             print("Could not make a connection to the server")
 
-        receiveThread = threading.Thread(target = self.receive, args = (self.client, True))
+        receiveThread = threading.Thread(target = self.receive, args = (self.client, True), daemon=True)
         receiveThread.start()
 
         sendThread = threading.Thread(target = self.send_data)
